@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FreeMyIP Record Updater</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="d-flex align-items-center justify-content-center vh-100">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <h1 class=" text-center">FreeMyIP Updater</h1>
+                    <p class="text-center">By Ehab Eldeeb</p>
+                    <p class="py-1"><input type="text" class="form-control py-2" name="domain" id="domain"
+                            placeholder="Domain Name (YOU.FreeMyIP.COM)" autofocus></p>
+                    <p class="py-1"><input type="text" class="form-control py-2" name="token" id="token"
+                            placeholder="Token (Your Domain Token)"></p>
+
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <p class="py-1"><input type="text" class="form-control py-2" name="ip" id="ip"
+                            placeholder="IP (Leave blank to set your current IP)"></p>
+
+                    <button class="btn btn-primary py-2 w-100" id="updateIP">Update IP</button>
+                </div>
+                <div class="col-md-4">
+                    <p class="py-1"><input type="text" class="form-control py-2" name="txt" id="txt"
+                            placeholder="TXT Record (Leave blank to clear)"></p>
+                    <p class="py-1">
+                        <button class="btn btn-primary py-2 w-100" id="updateTxt">Update TXT Record</button>
+                    </p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div id="result" style="height:100px;border-radius:5px;border:1px dotted #808080;">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $("#updateTxt").click(function () {
+                $.ajax({
+                    url: "fmi.php",
+                    method: "GET",
+                    data: {
+                        token: $("#token").val(),
+                        domain: $("#domain").val(),
+                        txt: $("#txt").val()
+                    },
+                    success: function (response) {
+                        $("#result").html(response);
+                    }
+
+                });
+            });
+
+            $("#updateIP").click(function () {
+                $.ajax({
+                    url: "fmi.php",
+                    method: "GET",
+                    data: {
+                        token: $("#token").val(),
+                        domain: $("#domain").val(),
+                        myip: $("#ip").val()
+                    },
+                    success: function (response) {
+                        $("#result").html(response);
+                    }
+
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
